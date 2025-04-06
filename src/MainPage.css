@@ -1,0 +1,192 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+.top-bar {
+  background-color: #004b91;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 32px;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  background-color: #007bff;
+  border-radius: 50%;
+  padding: 8px;
+  color: white;
+  font-weight: bold;
+}
+
+/* Body */
+.content {
+  display: flex;
+  flex: 1;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #f6f9fb;
+  width: 260px;
+  padding: 16px;
+  border-right: 1px solid #ddd;
+}
+
+.auth-status.success {
+  color: green;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.section-title,
+.section-subtitle {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 10px 0 6px;
+}
+
+.tool-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 6px;
+  text-align: left;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.tool-button.selected {
+  background-color: #e6f7e6;
+  font-weight: bold;
+}
+
+.tool-button.small {
+  font-size: 13px;
+  background: none;
+  border: none;
+  color: #555;
+  text-align: left;
+}
+
+/* Application Search */
+.application-search {
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.search-dropdown {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.search-dropdown li {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.search-dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Recently used apps */
+.recent-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.recent-list li {
+  padding: 6px 0;
+}
+
+/* Chat */
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.chat-area h2 {
+  margin-bottom: 24px;
+}
+
+.chat-input-box {
+  display: flex;
+  align-items: center;
+  width: 500px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chat-input-box input {
+  flex: 1;
+  border: none;
+  font-size: 14px;
+  outline: none;
+}
+
+.send-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #888;
+  padding: 8px;
+}
