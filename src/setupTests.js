@@ -1,3 +1,4 @@
+import streamlit as st
 import openai
 from docx import Document
 import pandas as pd
@@ -8,8 +9,8 @@ import io
 # Helper Functions
 # -------------------------
 
-def read_docx(file_path):
-    doc = Document(file_path)
+def read_docx(file):
+    doc = Document(file)
     full_text = []
     for para in doc.paragraphs:
         if para.text.strip():
@@ -74,8 +75,9 @@ def parse_test_scenarios(llm_output):
             })
     return parsed_data
 
-def save_to_excel(dataframe, file_path):
-    with pd.ExcelWriter(file_path, engine="openpyxl") as writer:
+def create_excel_file(dataframe):
+    output = io.BytesIO()
+    with pd.ExcelWriter(output, engine="openpyxl") as writer:
         dataframe.to_excel(writer, index=False, sheet_name="TestScenarios")
         workbook = writer.book
         worksheet = writer.sheets["TestScenarios"]
@@ -93,31 +95,45 @@ def save_to_excel(dataframe, file_path):
             adjusted_width = (max_length + 2)
             worksheet.column_dimensions[column_letter].width = adjusted_width
 
+    output.seek(0)
+    return output
+
 # -------------------------
-# Main Flow
+# Streamlit UI
 # -------------------------
 
-def main():
-    print("Healthcare BRD ➔ Test Scenarios Generator")
+st.set_page_config(page_title="Healthcare BRD to Test Scenario Generator", layout="wide")
+st.title("Healthcare BRD ➔ Test Scenarios Generator")
+st.write("Upload a **BRD (.docx)** file and generate healthcare-specific **test scenarios** automatically.")
 
-    brd_file = input("Enter the path to your BRD .docx file: ").strip()
-    output_file = input("Enter the desired output Excel file name (e.g., test_scenarios.xlsx): ").strip()
+uploaded_file = st.file_uploader("Upload BRD File (.docx)", type=["docx"])
 
-    try:
-        brd_content = read_docx(brd_file)
-        print("\nReading BRD and calling Azure OpenAI... Please wait...\n")
+if uploaded_file:
+    if st.button("Generate Test Scenarios"):
+        with st.spinner("Generating test scenarios... please wait."):
+            try:
+                brd_content = read_docx(uploaded_file)
+                llm_output = generate_test_scenarios(brd_content)
+                test_scenarios = parse_test_scenarios(llm_output)
 
-        llm_output = generate_test_scenarios(brd_content)
-        test_scenarios = parse_test_scenarios(llm_output)
+                if not test_scenarios:
+                    st.error("No test scenarios generated. Please check the BRD content or try again.")
+                else:
+                    df = pd.DataFrame(test_scenarios)
 
-        if not test_scenarios:
-            print("No test scenarios generated. Please check the BRD content or try again.")
-        else:
-            df = pd.DataFrame(test_scenarios)
-            save_to_excel(df, output_file)
-            print(f"\n✅ Test Scenarios generated successfully! Saved to: {output_file}")
-    except Exception as e:
-        print(f"❌ Error occurred: {str(e)}")
+                    # Show preview table
+                    st.subheader("Preview of Generated Test Scenarios:")
+                    st.dataframe(df, use_container_width=True)
 
-if __name__ == "__main__":
-    main()
+                    # Create excel file
+                    excel_file = create_excel_file(df)
+
+                    st.success("Test Scenarios generated successfully!")
+                    st.download_button(
+                        label="Download Test Scenarios as Excel",
+                        data=excel_file,
+                        file_name="test_scenarios.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
+            except Exception as e:
+                st.error(f"Error: {str(e)}")
