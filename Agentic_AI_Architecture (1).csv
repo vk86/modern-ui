@@ -1,0 +1,20 @@
+Layer,Component/Service,Responsibilities / Description
+React Frontend,FileUploadPanel,"Upload BRD file, show progress, call Node.js API"
+React Frontend,ChatConsole / AgentUI,"Enable chat with LangChain agent, display loader"
+React Frontend,ArtifactTable,"Display generated artifacts, allow in-place edits"
+React Frontend,SubmissionPanel,Select ALM tool and submit confirmed artifacts
+React Frontend,NotificationBanner,Show upload or processing notifications
+Node.js Middleware,API Router,"Expose REST endpoints for upload, validation, trigger"
+Node.js Middleware,Azure Blob SDK Handler,Upload file to Azure Blob with secure path
+Node.js Middleware,Audit Logger,Log metadata to MongoDB after file upload
+Node.js Middleware,Token Middleware,Validate session and token for secured endpoints
+LangChain Agent (FastAPI),BRDProcessorAgent,"Extract, chunk, embed and generate artifacts from BRD"
+LangChain Agent (FastAPI),ArtifactStorageService,Store output as JSON (MongoDB) or Excel
+LangChain Agent (FastAPI),ALMIntegrationService,"Push artifacts to RTC, JIRA, or Rally"
+LangChain Agent (FastAPI),Async Job Poller,Poll job status and notify frontend
+MongoDB,uploads,"Track file uploads, user, timestamps, status"
+MongoDB,artifacts,"Store user stories, test cases, test scripts"
+MongoDB,jobs,"Track job status, runtime, and error logs"
+MongoDB,users,Store user profile and auth data
+Azure Functions,BRD Upload Trigger,Trigger LangChain processing after upload
+Azure AKS,AKS Deployment,Deploy Node.js and FastAPI apps with autoscaling
