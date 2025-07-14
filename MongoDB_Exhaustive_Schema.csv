@@ -1,0 +1,26 @@
+Collection,Field Name,Data Type,Description
+users,user_id,String,Unique identifier for the user
+users,email,String,User's email address (used for login/SSO)
+users,full_name,String,User's full name for display purposes
+users,roles,Array[String],"User roles (e.g., admin, tester, product_owner)"
+uploads,upload_id,String,Unique identifier for each file upload
+uploads,user_id,String,Reference to user who uploaded the file
+uploads,filename,String,Name of the uploaded file
+uploads,upload_time,Date,Timestamp when file was uploaded
+uploads,blob_url,String,Blob SAS URL for the uploaded file
+uploads,file_type,String,"Type of file uploaded (e.g., BRD, Scenario)"
+uploads,status,String,"Upload status: uploaded, validated, failed"
+processing_jobs,job_id,String,Unique identifier for processing job
+processing_jobs,upload_id,String,Reference to the uploaded file
+processing_jobs,user_id,String,Reference to user who initiated processing
+processing_jobs,start_time,Date,Timestamp when processing started
+processing_jobs,end_time,Date,Timestamp when processing ended
+processing_jobs,status,String,"Status of the job: running, completed, failed"
+processing_jobs,error_log,String,Error details if processing failed
+artifacts,artifact_id,String,Unique identifier for each generated artifact
+artifacts,job_id,String,Reference to processing job that created it
+artifacts,artifact_type,String,"Type of artifact: user_story, test_case, test_script"
+artifacts,content,Object/JSON,Generated content in JSON format
+artifacts,status,String,"Status of the artifact: generated, submitted, rejected"
+artifacts,approved_by_user,Boolean,Flag indicating if user approved this artifact
+artifacts,approval_time,Date,Timestamp when user approved the artifact

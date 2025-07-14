@@ -1,0 +1,10 @@
+Component,Responsibility,Storage Strategy Notes
+User Upload Handler,Receives uploaded BRD/test scenario files from users and stores in user-specific container/folder,Use Azure SDK in Node.js to write files to Azure Blob
+BRD Upload Directory Structure,"Organizes files under containers or folders named by user ID and file type (e.g., /userId/input/)",Use hierarchical blob path: container/userId/input/filename
+Processed Output Directory,Stores generated output files (Excel/test cases/etc.) under /userId/output/ in blob storage,"Write output files (Excel, JSON) to container/userId/output/"
+Blob Naming Convention,Follows structured naming like userId_input_timestamp_filename.docx to ensure traceability,Include timestamp in filenames to prevent overwrite and ensure uniqueness
+Blob Metadata,"Attach metadata like userId, upload time, file type, jobId for downstream processing and audit",Set key metadata fields at upload time for audit/logging and traceability
+Blob SAS URL Generator,Generates SAS URLs with time-bound permissions for secure frontend access to files,Use short-lived SAS URLs (5-10 mins) and regenerate when users view/download
+User Dashboard Component,React component to visualize uploaded and processed files using metadata and SAS URL,Query MongoDB for user’s file list and display via table with links to blob
+File Status Tracker,Track upload/processing/download status using a jobId field linked to MongoDB,JobId stored in MongoDB links input file to generated output file
+Storage Cleanup Job,Periodic cleanup of unused or expired blobs (older than X days) to optimize storage cost,Run Azure Function or Logic App to delete expired files periodically
