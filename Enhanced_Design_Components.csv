@@ -1,0 +1,31 @@
+Layer,Component,Details / Responsibility
+Front End,Enable Upload Option,Allow user to upload BRD
+Front End,Chat Window Components,Chat interaction with agent
+Front End,User Stories Table,Display generated user stories
+Front End,Test Scenarios Table,Display generated scenarios
+Front End,User Action Workflow,Workflow to approve or discard outputs
+Front End,Review/Edit Output,Support inline edits and review before submission
+Front End,User Story Creation,Trigger story generation
+Front End,Test Case Creation,Trigger test case generation
+Node,File Validation,Ensure file format/size is valid
+Node,Upload to Blob + Confirmation,Upload and confirm with blob metadata
+Node,Folder/User File Management,Organize files by user/folder type
+Node,File Status Check,Check status from MongoDB
+Node,Processing Trigger to Agent,Trigger async job via FastAPI or Function
+Node,Polling Output File Status,Poll MongoDB for job result
+Node,User Notification API,Notify frontend of status change
+Agent (LangChain/FastAPI),BRD Processing Agent,Main LangChain async task for BRD parsing
+Agent (LangChain/FastAPI),LangChain Prompt + Tools Setup,Setup tools/chains to parse BRD
+Agent (LangChain/FastAPI),Chunking & Embedding Handler,Extract & embed documents in memory
+Agent (LangChain/FastAPI),Output Excel/JSON Generator,Generate and save outputs to Blob & DB
+Agent (LangChain/FastAPI),Azure Function Flow 1,Function to start processing via event/HTTP
+Agent (LangChain/FastAPI),Azure Function Flow 2,Second flow via scheduled or polling function
+Integration,File Status Check API,API to return job status
+Integration,Request and Write to MongoDB,Writes job/file metadata to MongoDB
+MongoDB,Create File Record,Insert file upload entry
+MongoDB,Update Blob File Metadata,"Add blob URL, file type, status"
+MongoDB,Track Job ID + Timestamps,Track processing and link upload-job-artifact
+MongoDB,Store Output Metadata & User Approval,"Store output text, Excel links, approval"
+Metadata,user_id,User identifier
+Metadata,upload_id,File identifier
+Metadata,artifact_metadata,"Title, type, structure, approval flag"
